@@ -1,5 +1,6 @@
-%% For image with one line text marks verticals begs and ends of the sign area
-%% when it contains letter on index begEndIsLetter(3) will be 1 when white area 0.
+
+% For image with one line text marks verticals begs and ends of the sign area
+% when it contains letter on index begEndIsLetter(3) will be 1 when white area 0.
 function [ begEndIsLetter ] = getLettersBegEndIsIndexes( image )
     begEndIsLetter = [];
     [y, x] = size(image);
