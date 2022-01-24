@@ -1,13 +1,13 @@
 function [ letters ] = getNormalizedLetters( image, rows, columns )
 %     imshow(image);
-    regions = regionprops(image, 'all');
+    selectedRegion = regionprops(image, 'all');
     
-    [x] = length(regions);
+    [x] = length(selectedRegion);
     letterIndex = 0;
     letters = ones(rows * columns, x);
     for i = 1: x
-        b = regions(i).Image;
-        [imY, imX] = size(b);
+        b = selectedRegion(i).Image;
+        [imY, ~] = size(b);
         if imY ~= 0
             resized = imresize(b, [rows columns]);
             resized = resized(:);
