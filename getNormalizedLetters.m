@@ -1,20 +1,22 @@
-function [ letters ] = getNormalizedLetters( image, rows, columns )
-%     imshow(image);
+function [ lettersMatrix ] = getNormalizedLetters( image, rows, cols )
+%     clc
     selectedRegion = regionprops(image, 'all');
-    
-    [x] = length(selectedRegion);
     letterIndex = 0;
-    letters = ones(rows * columns, x);
+    [x] = length(selectedRegion);
+    lettersMatrix = ones(rows * cols, x);
+%     disp(lettersMatrix);
+%     fprintf("DEBUG");
     for i = 1: x
         b = selectedRegion(i).Image;
         [imY, ~] = size(b);
         if imY ~= 0
-            resized = imresize(b, [rows columns]);
+            resized = imresize(b, [rows cols]);
             resized = resized(:);
             letterIndex = letterIndex + 1;
-            letters(:,letterIndex) = resized;
+            lettersMatrix(:,letterIndex) = resized;
         end
     end
-    letters = letters(:, 1:letterIndex);
+    lettersMatrix = lettersMatrix(:, 1:letterIndex);
 end
 
+    

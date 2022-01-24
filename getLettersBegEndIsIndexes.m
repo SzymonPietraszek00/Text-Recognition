@@ -5,25 +5,22 @@ function [ begEndIsLetter ] = getLettersBegEndIsIndexes( image )
     begEndIsLetter = [];
     [~, x] = size(image);
     linePixelsSum = sum(image);
-    threshold = 0;
-    
-     signBeginning = 1;
-    letterArea = 0;
+    threshold = 0; % white color
+    signBeginning = true;
+    flag = false;
     for i = 1: x
-        % letter under i
         if linePixelsSum(i) > threshold
-            % if beg of letter
-            if letterArea == 0
+            if flag == false
                 if(i - 1 -  signBeginning) > 0
                     begEndIsLetter = [begEndIsLetter;  signBeginning (i-1) 0];
                 end
-                 signBeginning = i;  %letter beg
-                letterArea = 1;
+                 signBeginning = i;
+                flag = true;
             end
         else
-            if letterArea == 1
+            if flag == true
                 begEndIsLetter = [begEndIsLetter;  signBeginning (i-1) 1];
-                letterArea = 0;
+                flag = ~flag;
                  signBeginning = i;
             end
         end

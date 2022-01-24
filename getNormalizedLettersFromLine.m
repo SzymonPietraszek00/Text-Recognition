@@ -1,18 +1,16 @@
-% used to extract normalized letters from single line image
-% image should be cutted up an down
 function [ letters ] = getNormalizedLettersFromLine( img )
     global regionHeight;
     global regionWidth;
 
-    begEndIsIndexes = getLettersBegEndIsIndexes(img);
-    [rows cols] = size(begEndIsIndexes);
-    amountOfLetters = sum(begEndIsIndexes(:, 3));
+    begEndIndexes = getLettersBegEndIsIndexes(img);
+    amountOfLetters = sum(begEndIndexes(:, 3));
+    [rows , ~] = size(begEndIndexes);
     letters = ones(regionHeight * regionWidth, amountOfLetters);
-    disp(regionHeight);
+%     disp(regionHeight);
     letterIndecols = 1;
     for i = 1: rows
-        if begEndIsIndexes(i, 3) == 1
-            letterImage =  img(:, begEndIsIndexes(i, 1):begEndIsIndexes(i, 2));
+        if begEndIndexes(i, 3) == 1
+            letterImage =  img(:, begEndIndexes(i, 1):begEndIndexes(i, 2));
             normalizedLetter = normalizeLetter(letterImage);
             letters(:, letterIndecols) = normalizedLetter;
             letterIndecols = letterIndecols + 1;

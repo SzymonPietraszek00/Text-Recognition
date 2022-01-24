@@ -1,22 +1,20 @@
-function [ wordsLength ] = getWordsLengthFromLine( SL_Image )
-    wordsLength = [];
+function [ wordsLength ] = getWordsLengthFromLine( img )
     
-    begEndIsIndexes = getLettersBegEndIsIndexes(SL_Image);
-    
-    %add 4 column with sign width
-    begEndIsIndexes = [begEndIsIndexes (begEndIsIndexes(:, 2) - begEndIsIndexes(:, 1))];
-    %remove first sign is white sign
-    if begEndIsIndexes(1, 3) == 0
-        begEndIsIndexes = begEndIsIndexes(2:end, :);
+    beginEndIndexes = getLettersBegEndIsIndexes(img);
+
+    beginEndIndexes = [beginEndIndexes (beginEndIndexes(:, 2) - beginEndIndexes(:, 1))];
+
+    if beginEndIndexes(1, 3) == 0
+        beginEndIndexes = beginEndIndexes(2:end, :);
     end
 
-    signsAmount =  size(begEndIsIndexes, 1);
-    amountOfWhiteSpaces = 0;
+    signsAmount =  size(beginEndIndexes, 1);
+    countSpaces = 0;
     spaces = [];
     for i = 1: signsAmount
-        if  begEndIsIndexes(i, 3) == 0
-            amountOfWhiteSpaces = amountOfWhiteSpaces + 1;
-            spaces = [spaces  begEndIsIndexes(i, 4)];
+        if  beginEndIndexes(i, 3) == 0
+            countSpaces = countSpaces + 1;
+            spaces(end + 1) = beginEndIndexes(i, 4);
         end
     end
 

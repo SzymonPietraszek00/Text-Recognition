@@ -1,13 +1,13 @@
-% From BW image creates matrix with normalized letters from image (one letter in each column)
 function [ extractedLetters ] = getNormalizedLettersFromImage( img )
-    begEndLinesYIndexes = getLinesBegEndIndexes(img);
-    y = size(begEndLinesYIndexes, 1);
-    extractedLetters = [];
+    beginEndIndex = getLinesBegEndIndexes(img);
+    y = size(beginEndIndex, 1);
+    extractedLetters = zeros(1,y);
     for i = 1: y
-        lineStartYIndex = begEndLinesYIndexes(i, 1);
-        lineEndYIndex = begEndLinesYIndexes(i, 2);
+        beginLine = beginEndIndex(i, 1);
+        endLine = beginEndIndex(i, 2);
         
-        normalizedLettersFromLine = getNormalizedLettersFromLine(img(lineStartYIndex:lineEndYIndex, :));
-        extractedLetters = [extractedLetters normalizedLettersFromLine];
+        beginLine = getNormalizedLettersFromLine(img(beginLine:endLine, :));
+        extractedLetters = (beginLine);
     end
+%     disp(extractedLetters);
 end
