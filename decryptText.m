@@ -6,7 +6,7 @@ function [ text ] = decryptText( codeNormalized, textImage)
         lineStartYIndex = begEndLinesYIndexes(i, 1);
         lineEndYIndex = begEndLinesYIndexes(i, 2);
         line = decryptSingleLineText(codeNormalized, textImage(lineStartYIndex:lineEndYIndex, :));
-        text = strcat(text, ' -> ' , line);
+        text = sprintf('%s%s%s',text,newline, line)
     end
     text
 end

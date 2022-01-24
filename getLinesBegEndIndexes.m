@@ -1,28 +1,29 @@
-%% Returns info where line starts and ends. Each row is for one line
+% Returns info where line starts and ends. Each row is for one line
 function [ lines ] = getLinesBegEndIndexes(textImage)   
-    lines = [];
+
     [y, x] = size(textImage);
-    linePixelsSum = sum(textImage');
-    % pick threshold (wheather or not treat line as text line - works but
-    % unnessesery
-    %     REMOVE_FRACTION = 0.1;
-    %     n = uint8(x * REMOVE_FRACTION);
-    %     sortedLinePieselsSums = sort(linePixelsSum);
-    %     threshold = sortedLinePieselsSums(n);
+%     fprintf('Size of image x %d\n', x);
+%     fprintf('Size of image y %d\n', y);
+%     if we transpose matrix with pixels we can easily detect end of letter. It happens when the sum is equals zero
+    linePixelsSum = sum(ctranspose(textImage));
+%     fprintf('Line piselx smu = %d\n', linePixelsSum);
     threshold = 0;
+    startOfLineIndex = 0;
+    flag = 0;
     
-    lineStart = 0;
-    lineArea = 0;
+%     We look for first and another occuring 0 value of sum of Pixels to
+%     detect lines and store data in array
+    lines = [];
     for i = 1: y
         if linePixelsSum(i) > threshold
-            if lineArea == 0
-                lineStart = i;
-                lineArea = 1;
+            if flag == false
+                startOfLineIndex = i;
+                flag = true;
             end
         else
-            if lineArea == 1
-                lines = [lines; lineStart i];
-                lineArea = 0;
+            if flag == true
+                lines = [lines; startOfLineIndex i];
+                flag = ~flag;
             end
         end
     end

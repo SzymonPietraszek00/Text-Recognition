@@ -1,20 +1,21 @@
-%% used to extract normalized letters from single line image
-%% image should be cutted up an down
-function [ letters ] = getNormalizedLettersFromLine( SL_Image )
+% used to extract normalized letters from single line image
+% image should be cutted up an down
+function [ letters ] = getNormalizedLettersFromLine( img )
     global regionHeight;
     global regionWidth;
 
-    begEndIsIndexes = getLettersBegEndIsIndexes(SL_Image);
-    [y x] = size(begEndIsIndexes);
+    begEndIsIndexes = getLettersBegEndIsIndexes(img);
+    [rows cols] = size(begEndIsIndexes);
     amountOfLetters = sum(begEndIsIndexes(:, 3));
     letters = ones(regionHeight * regionWidth, amountOfLetters);
-    letterIndex = 1;
-    for i = 1: y
+    disp(regionHeight);
+    letterIndecols = 1;
+    for i = 1: rows
         if begEndIsIndexes(i, 3) == 1
-            letterImage =  SL_Image(:, begEndIsIndexes(i, 1):begEndIsIndexes(i, 2));
+            letterImage =  img(:, begEndIsIndexes(i, 1):begEndIsIndexes(i, 2));
             normalizedLetter = normalizeLetter(letterImage);
-            letters(:, letterIndex) = normalizedLetter;
-            letterIndex = letterIndex + 1;
+            letters(:, letterIndecols) = normalizedLetter;
+            letterIndecols = letterIndecols + 1;
         end
     end
 end

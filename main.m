@@ -21,14 +21,16 @@ regionWidth = 14;
 toDecrypt = 'text_Calibri_72.png';
 
 %Reading code pattern
-codeImage = readImage('code_Calibri_72.png');
-codeNormalized = getNormalizedLettersFromImage(codeImage);
+smaplesImage = readImage('code_Calibri_72.png');
+
+% Extracting lettters from image
+extractedLetters = getNormalizedLettersFromImage(smaplesImage);
 
 
 textImage = readImage(toDecrypt);
-lettersToRead = getNormalizedLettersFromImage(codeImage);
+lettersToRead = getNormalizedLettersFromImage(smaplesImage);
 
-text = decryptText(codeNormalized, textImage);
+text = decryptText(extractedLetters, textImage);
 
 
 
